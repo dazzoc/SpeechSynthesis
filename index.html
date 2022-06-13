@@ -37,6 +37,7 @@
   const stopButton = document.querySelector('#stop');
   msg.text = document.querySelector('[name="text"]').value;
 
+  // populate the select options list with default voices getVoices()
   function populateVoices() {
     voices = this.getVoices();
     voicesDropdown.innerHTML = voices
@@ -45,6 +46,8 @@
       .join('');
   }
 
+  // set the voice to the selected value
+  // find the one that name attribute is the same as the option value
   function setVoice() {
     msg.voice = voices.find(voice => voice.name === this.value);
     toggle();
@@ -52,7 +55,7 @@
 
   function toggle(startOver = true) {
     speechSynthesis.cancel();
-    if (startOver) {
+    if (startOver){
       speechSynthesis.speak(msg);
     }
   }
@@ -63,6 +66,7 @@
     toggle();
   }
 
+  // listen for voice change event
   speechSynthesis.addEventListener('voiceschanged', populateVoices);
   voicesDropdown.addEventListener('change', setVoice);
   options.forEach(option => option.addEventListener('change', setOption));
